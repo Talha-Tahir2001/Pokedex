@@ -1,0 +1,118 @@
+<!-- Description: Header component for the application -->
+<header
+  class="min-h-[10vh] px-16 py-6 w-full bg-white flex justify-between items-center shadow-sm"
+>
+  <!-- Logo -->
+  <a routerLink="/">
+    <img src="pokemon--logo.png" alt="Logo" width="120" height="90" />
+  </a>
+
+  <!-- Navigation -->
+  <nav>
+    <ul class="hidden md:flex items-center gap-8 text-gray-400">
+      @for (item of menu(); track $index) {
+      <li>
+        <a
+          [routerLink]="item.link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.link === '/' }"
+          class="py-2 px-6 text-sm flex items-center gap-2 font-bold rounded-lg transition-colors"
+          #rla="routerLinkActive"
+          [ngClass]="{
+            'bg-[#6c5ce7]/15': rla.isActive,
+            'text-[#6c5ce7]': rla.isActive
+          }"
+        >
+          <ng-icon hlm size="sm" [name]="item.icon" />
+          <span>{{ item.name }}</span>
+        </a>
+      </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- Auth Section -->
+  @if (user | async; as user) {
+
+  <div [brnMenuTriggerFor]="menu" class="outline-none border-none cursor-pointer">
+    <div
+      class="bg-[#6c5ce7]/15 flex items-center justify-center gap-2 rounded-lg "
+    >
+      <span class="pl-2 text-[#6c5ce7] text-sm font-bold">
+        {{ user.name || "User" }}
+      </span>
+      <img
+        [src]="user.picture || ''"
+        width="40"
+        height="40"
+        alt="avatar"
+        class="p-1 rounded-lg"
+      />
+      <!-- <ng-icon hlm name="lucideChevronRight"></ng-icon> -->
+    </div>
+
+    <ng-template #menu>
+      <hlm-menu class="w-[160px]" aria-label="User menu">
+        <hlm-menu-label class="cursor-default">My Account</hlm-menu-label>
+        <hlm-menu-separator />
+        <hlm-menu-group>
+          <button type="button" hlmMenuItem>
+            <ng-icon hlm name="lucideUser" hlmMenuIcon />
+            <span class="cursor-pointer">Profile</span>
+            <hlm-menu-shortcut>⇧⌘P</hlm-menu-shortcut>
+          </button>
+
+          <!-- <button type="button" hlmMenuItem>
+            <ng-icon hlm name="lucideLayers" hlmMenuIcon />
+            <span>Billing</span>
+            <hlm-menu-shortcut>⌘B</hlm-menu-shortcut>
+          </button>
+
+          <button type="button" hlmMenuItem>
+            <ng-icon hlm name="lucideCog" hlmMenuIcon />
+            <span>Settings</span>
+            <hlm-menu-shortcut>⌘S</hlm-menu-shortcut>
+          </button> -->
+        </hlm-menu-group>
+        <hlm-menu-separator />
+        <hlm-menu-group>
+          <button
+            type="button"
+            hlmMenuItem
+            (click)="
+              auth.logout({
+                logoutParams: { returnTo: document.location.origin }
+              })
+            "
+          >
+            <ng-icon class="cursor-pointer" hlm name="lucideLogOut" hlmMenuIcon />
+            <span class="cursor-pointer">Logout</span>
+            <hlm-menu-shortcut>⌘L</hlm-menu-shortcut>
+          </button>
+        </hlm-menu-group>
+      </hlm-menu>
+    </ng-template>
+  </div>
+  } @else if (!(isLoading | async)) {
+  <div class="flex items-center gap-4">
+    <button
+      type="button"
+      (click)="auth.loginWithRedirect()"
+      class="py-2 px-6 text-sm flex items-center gap-2 font-bold rounded-lg bg-[#6c5ce7]/15 text-[#6c5ce7] hover:bg-[#6c5ce7]/30 transition-all duration-300 ease-in-out cursor-pointer"
+    >
+      <ng-icon hlm size="sm" name="lucideLogIn" />
+      Login
+    </button>
+    <button
+      type="button"
+      (click)="auth.loginWithRedirect()"
+      class="py-2 px-6 text-sm flex items-center gap-2 font-bold rounded-lg bg-[#6c5ce7] text-white hover:bg-[#6c5ce7]/90 transition-all duration-300 ease-in-out cursor-pointer"
+    >
+      <ng-icon hlm size="sm" name="lucideUserPlus" />
+      Register
+    </button>
+  </div>
+  }
+</header>
+
+

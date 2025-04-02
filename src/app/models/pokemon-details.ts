@@ -216,6 +216,13 @@ export interface PokemonDetails {
       name: string;
       url: string;
     };
+    cries: {
+      latest: string;
+      legacy: string;
+    };
+    evolution_chain?: {
+      url: string;
+    };
     held_items?: {
       item: {
         name: string;

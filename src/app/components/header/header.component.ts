@@ -1,5 +1,5 @@
-import { Component, inject, signal, input } from '@angular/core';
-import { DOCUMENT, NgFor, TitleCasePipe } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
@@ -26,7 +26,7 @@ import {
   lucideUser,
   lucideUserPlus,
 } from '@ng-icons/lucide';
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 
 // Import the AuthService type from the SDK
 import { AuthService } from '@auth0/auth0-angular';
@@ -80,15 +80,8 @@ export class HeaderComponent {
   user = this.auth.user$;
   public isLoading = this.auth.isLoading$;
   
-  public isLoggingOut = signal(false);
-
-
-
-  constructor() {
-    this.user.subscribe((user) => {
-      console.log('Current user:', user);
-    });
-  }
+  // public isLoggingOut = signal(false);
+  constructor() {}
 
   menu = signal<Menu[]>([
     {

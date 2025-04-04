@@ -89,11 +89,11 @@ export class HeaderComponent {
       link: '/',
       icon: 'lucideLayoutDashboard',
     },
-    {
-      name: 'Favorites',
-      link: '/favorites',
-      icon: 'lucideHeart',
-    },
+    // {
+    //   name: 'Favorites',
+    //   link: '/favorites',
+    //   icon: 'lucideHeart',
+    // },
     {
       name: 'Saved',
       link: '/bookmarks',

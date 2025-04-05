@@ -1,0 +1,49 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Add search state indicator -->
+  @if (isSearching()) {
+  <div class="mb-4 text-center text-gray-600">Showing search results...</div>
+  }
+
+  <div
+    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="300"
+    (scrolled)="onScroll()"
+    [infiniteScrollDisabled]="isSearching() || pokemonService.loading()"
+  >
+    @for (pokemon of pokemonService.pokemonDetails(); track pokemon.id) {
+    <app-pokemon-card [pokemon]="pokemon"></app-pokemon-card>
+    } @empty { @if (!pokemonService.loading()) {
+    <div class="col-span-full text-center text-gray-500 py-8">
+      No Pokémon found
+    </div>
+    } }
+  </div>
+
+  <!-- Loading indicator with accessibility -->
+  @if (pokemonService.loading()) {
+  <div class="flex justify-center py-8" aria-live="polite">
+    <div
+      class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"
+      role="status"
+    >
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  }
+
+  <!-- Error message display -->
+  @if (pokemonService.error()) {
+  <div class="text-center text-red-500 py-4" aria-live="polite">
+    <p>Error loading Pokémon data</p>
+    <button
+      type="button"
+      class="mt-2 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200"
+      (click)="loadInitialPokemon()"
+    >
+      Retry
+    </button>
+  </div>
+  }
+</div>

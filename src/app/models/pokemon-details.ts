@@ -3,6 +3,7 @@ export interface PokemonDetails {
     name: string;
     height: number;
     weight: number;
+    
     base_experience: number;
     sprites: {
       front_default: string;
@@ -179,6 +180,7 @@ export interface PokemonDetails {
         url: string;
       };
     }[];
+    
     abilities: {
       ability: {
         name: string;

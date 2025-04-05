@@ -1,0 +1,177 @@
+<!-- pokemon-details.component.html -->
+
+@if (pokemon$ | async; as pokemon) {
+<div
+  class="px-16 py-8 min-h-[90vh] grid grid-cols-1 md:grid-cols-2 gap-8"
+  [ngStyle]="{ background: getTypeClass(getRandomType(pokemon.types)) }"
+>
+  <!-- Pokemon Details Section -->
+  <div class="flex flex-col justify-center gap-6">
+    <div class="flex flex-col gap-1">
+      <div class="flex gap-4 mb-4">
+        <button
+          type="button"
+          title="Play old Pokemon cry sound"
+          class="px-4 py-2 flex items-center gap-2 text-sm font-bold bg-white text-[#54a0ff] rounded-full hover:bg-white/90 transition-all duration-300 ease-in-out cursor-pointer"
+          (click)="playAudio(pokemon.cries.legacy)"
+        >
+          <ng-icon hlm name="lucideVolume2" /> Old Cry
+        </button>
+        <button
+          type="button"
+          title="Play new Pokemon cry sound"
+          class="px-4 py-2 flex items-center gap-2 text-sm font-bold bg-white text-[#54a0ff] rounded-full hover:bg-white/90 transition-all duration-300 ease-in-out cursor-pointer"
+          (click)="playAudio(pokemon.cries.latest)"
+        >
+          <ng-icon hlm name="lucideVolume2" /> New Cry
+        </button>
+      </div>
+
+      <h1 class="text-4xl md:text-6xl font-bold capitalize drop-shadow-sm">
+        {{ pokemon.name | titlecase }}
+      </h1>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <!-- Abilities -->
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-bold">Abilities</h2>
+        <ul class="flex flex-wrap gap-2">
+          @for (ability of pokemon.abilities; track $index) {
+          <li
+            class="px-4 py-2 text-sm font-bold bg-white text-[#54a0ff] rounded-full"
+          >
+            {{ ability.ability.name | titlecase }}
+          </li>          
+          }
+        </ul>
+      </div>
+
+      <!-- Types -->
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-bold">Types</h2>
+        <ul class="flex flex-wrap gap-2">
+          @for (type of pokemon.types; track $index) {
+          <li
+            class="px-4 py-2 text-sm font-bold bg-white text-[#54a0ff] rounded-full"
+          >
+            {{ type.type.name | titlecase }}
+          </li>
+          }
+        </ul>
+      </div>
+      <!-- Moves -->
+      <!-- <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-bold">Moves</h2>
+        <ul class="flex flex-wrap gap-2">
+          @for (move of pokemon.moves; track $index) {
+          <li
+            class="px-4 py-2 text-sm font-bold bg-white text-[#54a0ff] rounded-full"
+          >
+            {{ move.move.name | titlecase }}
+          </li>
+          }
+        </ul>
+      </div> -->
+      
+    </div>
+
+    <!-- Base Stats -->
+    <div class="flex flex-col gap-2">
+      <h2 class="text-2xl font-bold">Base Stats</h2>
+      <ul class="flex flex-col gap-4">
+        @for (stat of pokemon.stats; track $index) {
+        <li class="flex flex-col gap-1">
+          <div class="flex items-center gap-4">
+            <span class="capitalize">{{ stat.stat.name | titlecase }}</span>
+            <span class="font-bold">{{ stat.base_stat }}</span>
+          </div>
+          <div class="w-full h-3 bg-white/15 rounded-md overflow-hidden">
+            <div
+              class="h-full rounded-md bg-[#54a0ff] transition-all duration-300 ease-in-out"
+              [style.width]="(stat.base_stat / 200) * 100 + '%'"
+            ></div>
+            <!-- <div
+              class="h-full rounded-md bg-[#54a0ff] transition-all duration-300 ease-in-out"
+              [style.width]="(stat.effort) * 100 + '%'"
+            ></div> -->
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Measurements -->
+    <div class="mt-2 flex flex-wrap gap-4">
+      <div class="p-4 flex flex-col items-center bg-slate-200 rounded-lg">
+        <span class="text-sm flex items-center gap-2 text-gray-600">
+          <ng-icon hlm name="lucideRuler" size="18" />
+          Height
+        </span>
+        <span class="font-bold uppercase text-gray-600"
+          >{{ pokemon.height / 10 | number : "1.1-1" }} m</span
+        >
+      </div>
+      <div class="p-4 flex flex-col items-center bg-slate-200 rounded-lg">
+        <span class="text-sm flex items-center gap-2 text-gray-600">
+          <ng-icon hlm name="lucideWeight" size="18" />
+          Weight
+        </span>
+        <span class="font-bold uppercase text-gray-600"
+          >{{ pokemon.weight / 10 | number : "1.1-1" }} kg</span
+        >
+      </div>
+      <div class="p-4 flex flex-col items-center bg-slate-200 rounded-lg">
+        <span class="text-sm flex items-center gap-2 text-gray-600">
+          <ng-icon hlm name="lucideWeight" size="18" />
+          Base EX
+        </span>
+        <span class="font-bold uppercase text-gray-600"
+          >{{ pokemon.base_experience }} XP</span
+        >        
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Section -->
+  <div class="relative flex justify-center items-center">   
+    <img
+      alt="{{ pokemon.name }}"
+      [src]="pokemon.sprites.versions?.['generation-v']?.['black-white']?.animated?.front_default
+    || pokemon.sprites.other?.home?.front_default
+    || pokemon.sprites.versions?.['generation-vii']?.['ultra-sun-ultra-moon']?.front_default
+    || pokemon.sprites.front_default"
+      [alt]="pokemon.name"
+      class="relative z-10 w-[500px] h-[500px] object-contain drop-shadow-lg"
+    />
+  </div>
+</div>
+} @else if (loading()) {
+<div class="loading-spinner">
+  <svg
+    class="animate-spin h-8 w-8 text-blue-500"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <circle
+      class="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      stroke-width="4"
+    ></circle>
+    <path
+      class="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+    ></path>
+  </svg>
+</div>
+} @else {
+<div class="error-message">
+  <p class="text-xl font-semibold mb-2">Failed to load Pokémon details</p>
+  <p class="text-sm">Please check the Pokémon ID or try again later</p>
+</div>
+}

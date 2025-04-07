@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -31,7 +31,6 @@ import { AsyncPipe, NgClass } from '@angular/common';
 // Import the AuthService type from the SDK
 import { AuthService } from '@auth0/auth0-angular';
 
-
 export interface Menu {
   name: string;
   link: string;
@@ -40,7 +39,7 @@ export interface Menu {
 
 @Component({
   selector: 'app-header',
-  imports: [    
+  imports: [
     RouterLink,
     RouterLinkActive,
     AsyncPipe,
@@ -53,7 +52,7 @@ export interface Menu {
     HlmMenuItemIconDirective,
     HlmMenuLabelComponent,
     HlmMenuSeparatorComponent,
-    HlmMenuShortcutComponent,
+
     BrnMenuTriggerDirective,
   ],
   providers: [
@@ -66,7 +65,7 @@ export interface Menu {
       lucideUser,
       lucideLayers,
       lucideCog,
-      lucideLogOut,      
+      lucideLogOut,
     }),
   ],
   templateUrl: './header.component.html',
@@ -74,16 +73,15 @@ export interface Menu {
   `,
 })
 export class HeaderComponent {
-  
   public document: Document = inject(DOCUMENT);
   public auth: AuthService = inject(AuthService);
   user = this.auth.user$;
   public isLoading = this.auth.isLoading$;
-  
+
   // public isLoggingOut = signal(false);
   constructor() {}
 
-  menu = signal<Menu[]>([
+  mainMenu = signal<Menu[]>([
     {
       name: 'Browse',
       link: '/',
@@ -100,5 +98,10 @@ export class HeaderComponent {
       icon: 'lucideBookmark',
     },
   ]);
-  
+
+  isMenuOpen = signal(false);
+
+  closeMenu() {
+    this.isMenuOpen.set(false);
+  }
 }

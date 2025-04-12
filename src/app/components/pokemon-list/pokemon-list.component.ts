@@ -71,4 +71,6 @@ export class PokemonListComponent implements OnInit {
         .subscribe();
     }
   }
+
+ 
 }

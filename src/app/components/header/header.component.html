@@ -35,32 +35,34 @@
     [brnMenuTriggerFor]="menu"
     class="outline-none border-none cursor-pointer"
   >
+    <!-- Mobile view -->
     <div
-      class="bg-[#6c5ce7]/15 flex items-center justify-center gap-2 rounded-lg"
+      class="bg-[#6c5ce7]/15 flex items-center justify-center gap-2 rounded-lg md:hidden"
     >
-      <!-- Mobile Menu Icon (only on small screens) -->
       <ng-icon
         hlm
         name="lucideLayoutDashboard"
-        class="md:hidden w-6 h-6 text-[#6c5ce7]"
+        class="w-6 h-6 text-[#6c5ce7]"
       />
-
-      <!-- User Info (only on desktop) -->
-      @if (user | async; as user) {
-      <div class="hidden md:flex items-center gap-2">
-        <span class="pl-2 text-[#6c5ce7] text-sm font-bold">
-          {{ user.name || "User" }}
-        </span>
-        <img
-          [src]="user.picture || ''"
-          width="40"
-          height="40"
-          alt="avatar"
-          class="p-1 rounded-lg"
-        />
-      </div>
-      }
     </div>
+
+    <!-- Desktop view -->
+    @if (user | async; as user) {
+    <div
+      class="bg-[#6c5ce7]/15 hidden md:flex items-center justify-center gap-2 rounded-lg"
+    >
+      <span class="pl-2 text-[#6c5ce7] text-sm font-bold">
+        {{ user.name || "User" }}
+      </span>
+      <img
+        [src]="user.picture || ''"
+        width="40"
+        height="40"
+        alt="avatar"
+        class="p-1 rounded-lg"
+      />
+    </div>
+    }
 
     <ng-template #menu>
       <hlm-menu class="w-[160px]" aria-label="Main menu">

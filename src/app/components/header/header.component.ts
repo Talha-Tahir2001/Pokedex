@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 

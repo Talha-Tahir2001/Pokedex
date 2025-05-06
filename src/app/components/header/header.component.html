@@ -31,27 +31,28 @@
   </nav>
 
   <!-- Combined Auth & Mobile Menu Dropdown -->
+  <!-- Menu Trigger Wrapper (Always Exists) -->
   <div
     [brnMenuTriggerFor]="menu"
     class="outline-none border-none cursor-pointer"
   >
-    <!-- Mobile view -->
+    <!-- Mobile Only Icon -->
     <div
-      class="bg-[#6c5ce7]/15 flex items-center justify-center gap-2 rounded-lg md:hidden"
+      class="flex md:hidden items-center justify-center bg-[#6c5ce7]/15 rounded-lg p-2"
     >
-      <ng-icon
+      <ng-icon 
         hlm
         name="lucideLayoutDashboard"
-        class="w-6 h-6 text-[#6c5ce7]"
+        class="text-[#6c5ce7]"
       />
     </div>
 
-    <!-- Desktop view -->
-    @if (user | async; as user) {
+    <!-- Desktop Only User Section -->
     <div
-      class="bg-[#6c5ce7]/15 hidden md:flex items-center justify-center gap-2 rounded-lg"
+      class="hidden md:flex items-center justify-center gap-2 bg-[#6c5ce7]/15 rounded-lg px-4 py-1"
     >
-      <span class="pl-2 text-[#6c5ce7] text-sm font-bold">
+      @if (user | async; as user) {
+      <span class="text-[#6c5ce7] text-sm font-bold">
         {{ user.name || "User" }}
       </span>
       <img
@@ -61,65 +62,73 @@
         alt="avatar"
         class="p-1 rounded-lg"
       />
+      } @else {
+      <ng-icon hlm name="lucideUser" class="text-[#6c5ce7] w-4 h-4" />
+      }
     </div>
-    }
+  </div>
 
-    <ng-template #menu>
-      <hlm-menu class="w-[160px]" aria-label="Main menu">
-        <!-- Mobile Navigation Items (only on small screens) -->
-        <div class="md:hidden">
-          <!-- Account Items (always visible) -->
-          <hlm-menu-label class="cursor-default">Pokedex</hlm-menu-label>
-          <hlm-menu-group>
-            @for (item of mainMenu(); track $index) {
-            <hlm-menu-separator />
-            <a
-              hlmMenuItem
-              [routerLink]="item.link"
-              (click)="closeMenu()"
-              class="flex items-center gap-2"
-            >
-              <ng-icon hlm [name]="item.icon" hlmMenuIcon />
-              <span>{{ item.name }}</span>
-            </a>
-            }
-          </hlm-menu-group>
+  <ng-template #menu>
+    <hlm-menu class="w-[160px]" aria-label="Main menu">
+      <!-- Mobile Navigation Items (only on small screens) -->
+      <div class="md:hidden">
+        <!-- Account Items (always visible) -->
+        <hlm-menu-label class="cursor-default">Pokedex</hlm-menu-label>
+        <hlm-menu-group>
+          @for (item of mainMenu(); track $index) {
           <hlm-menu-separator />
-        </div>
-
-        <hlm-menu-label class="cursor-default">My Account</hlm-menu-label>
-        <hlm-menu-separator />
-        <hlm-menu-group>
-          <button type="button" hlmMenuItem>
-            <ng-icon hlm name="lucideUser" hlmMenuIcon />
-            <span>Profile</span>
-          </button>
-        </hlm-menu-group>
-
-        <!-- Auth Section -->
-        <hlm-menu-separator />
-        <hlm-menu-group>
-          @if (user | async) {
-          <button
-            type="button"
+          <a
             hlmMenuItem
-            (click)="
-              auth.logout({
-                logoutParams: { returnTo: document.location.origin }
-              })
-            "
+            [routerLink]="item.link"
+            (click)="closeMenu()"
+            class="flex items-center gap-2"
           >
-            <ng-icon hlm name="lucideLogOut" hlmMenuIcon />
-            <span>Logout</span>
-          </button>
-          } @else {
-          <button type="button" hlmMenuItem (click)="auth.loginWithRedirect()">
-            <ng-icon hlm name="lucideLogIn" hlmMenuIcon />
-            <span>Login</span>
-          </button>
+            <ng-icon hlm [name]="item.icon" hlmMenuIcon />
+            <span>{{ item.name }}</span>
+          </a>
           }
         </hlm-menu-group>
-      </hlm-menu>
-    </ng-template>
-  </div>
+        <hlm-menu-separator />
+      </div>
+
+      <hlm-menu-label class="cursor-default">My Account</hlm-menu-label>
+      <hlm-menu-separator />
+      <hlm-menu-group>
+        <button type="button" hlmMenuItem>
+          <ng-icon hlm name="lucideUser" hlmMenuIcon />
+          <span>Profile</span>
+        </button>
+      </hlm-menu-group>
+
+      <!-- Auth Section -->
+      <hlm-menu-separator />
+      <hlm-menu-group>
+        @if (user | async) {
+        <button
+          class="cursor-pointer"
+          type="button"
+          hlmMenuItem
+          (click)="
+            auth.logout({
+              logoutParams: { returnTo: document.location.origin }
+            })
+          "
+        >
+          <ng-icon hlm name="lucideLogOut" hlmMenuIcon />
+          <span>Logout</span>
+        </button>
+        } @else {
+        <button
+          class="cursor-pointer"
+          type="button"
+          hlmMenuItem
+          (click)="auth.loginWithRedirect()"
+        >
+          <ng-icon hlm name="lucideLogIn" hlmMenuIcon />
+          <span>Login</span>
+        </button>
+        }
+      </hlm-menu-group>
+    </hlm-menu>
+  </ng-template>
 </header>

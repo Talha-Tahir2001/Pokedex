@@ -10,8 +10,7 @@ import {
   HlmMenuItemDirective,
   HlmMenuItemIconDirective,
   HlmMenuLabelComponent,
-  HlmMenuSeparatorComponent,
-  HlmMenuShortcutComponent,
+  HlmMenuSeparatorComponent,  
 } from '@spartan-ng/ui-menu-helm';
 
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -52,7 +51,6 @@ export interface Menu {
     HlmMenuItemIconDirective,
     HlmMenuLabelComponent,
     HlmMenuSeparatorComponent,
-
     BrnMenuTriggerDirective,
   ],
   providers: [

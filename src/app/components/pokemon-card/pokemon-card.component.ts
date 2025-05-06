@@ -1,4 +1,4 @@
-import { Component, inject, input, model } from '@angular/core';
+import { Component, inject, input, model, signal } from '@angular/core';
 import { DecimalPipe, NgClass, TitleCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { PokemonDetails } from '../../models/pokemon-details';
@@ -24,7 +24,7 @@ import { PokemonService } from '../../services/pokemon.service';
 export class PokemonCardComponent {
 
   // liked = model(false);
-  bookmarked = model(false);  
+  bookmarked = signal(false);  
   private router: Router = inject(Router);
   public auth: AuthService = inject(AuthService);
   private pokemonService: PokemonService = inject(PokemonService);
@@ -46,20 +46,20 @@ export class PokemonCardComponent {
   //   });
   // }
 
-  toggleBookmark() {
-    this.auth.user$.subscribe(user => {
-      if (user) {
-        this.bookmarked.set(!this.bookmarked());
-        this.pokemonService.performAction(
-          user.sub ?? '',
-          this.pokemon().name,
-          'bookmark'
-        ).subscribe();
-      } else {
-        this.auth.loginWithRedirect();
-      }
-    });
-  }
+  // toggleBookmark() {
+  //   this.auth.user$.subscribe(user => {
+  //     if (user) {
+  //       this.bookmarked.set(!this.bookmarked());
+  //       this.pokemonService.performAction(
+  //         user.sub ?? '',
+  //         this.pokemon().name,
+  //         'bookmark'
+  //       ).subscribe();
+  //     } else {
+  //       this.auth.loginWithRedirect();
+  //     }
+  //   });
+  // }
 
   viewDetails() {
     this.router.navigate(['/pokemon', this.pokemon().name]);

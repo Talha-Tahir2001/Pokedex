@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node -r dotenv/config mynode.js && ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -27,6 +27,7 @@
     "@tailwindcss/postcss": "^4.0.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
     "ngx-infinite-scroll": "^19.0.0",
     "postcss": "^8.5.3",
     "prisma": "^6.5.0",

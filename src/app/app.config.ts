@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAuth0({
       domain: environment.auth.domain,
-      clientId: environment.auth.clientId,
+      clientId: environment.auth.clientID,
       authorizationParams: {
         redirect_uri: environment.authorizationParams.redirectUri
       }

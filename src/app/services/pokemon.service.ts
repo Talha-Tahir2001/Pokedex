@@ -53,7 +53,7 @@ export class PokemonService {
     const offset = (page - 1) * 50;
     
     return this.http.get<{ results: Pokemon[] }>(
-      `${this.pokemonBaseUrl}/pokemon?offset=${offset}&limit=40`
+      `${this.pokemonBaseUrl}pokemon?offset=${offset}&limit=40`
     ).pipe(
       tap(response => {
         this.pokemonList.update(prev => [...prev, ...response.results]);
@@ -78,7 +78,7 @@ export class PokemonService {
 
   fetchAllPokemon(): Observable<void> {
     return this.http.get<{ results: Pokemon[] }>(
-      `${this.pokemonBaseUrl}/pokemon?limit=1118`
+      `${this.pokemonBaseUrl}pokemon?limit=1118`
     ).pipe(
       tap(response => this.allPokemon.set(response.results)),
       map(() => void 0),
@@ -129,7 +129,7 @@ export class PokemonService {
     this.loading.set(true);
     this.error.set(null);
     return this.http.get<PokemonDetails>(
-      `${this.pokemonBaseUrl}/pokemon/${identifier}`
+      `${this.pokemonBaseUrl}pokemon/${identifier}`
     ).pipe(
       catchError(error => {
         let message = 'Unknown error';
@@ -151,7 +151,7 @@ export class PokemonService {
     this.error.set(null);
     this.pokemonDetails.set([]);
   
-    const url = `${this.pokemonBaseUrl}/pokemon/${encodeURIComponent(name)}`;
+    const url = `${this.pokemonBaseUrl}pokemon/${encodeURIComponent(name)}`;
     console.log('API URL:', url); // Debug log
   
     return this.http.get<PokemonDetails>(url).pipe(

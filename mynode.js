@@ -21,7 +21,7 @@ const envFile = `export const environment = {
         redirectUri: window.location.origin,
     },
     api: {
-        POKE_API_URI: '${process.env.POKE_API_URL}',
+        POKE_API_URL: '${process.env.POKE_API_URL}',
         BACKEND_API_URI: '${process.env.BACKEND_API_URI}',
         API_URI_BOOKMARKS: '${process.env.API_URI_BOOKMARKS}',
     },  

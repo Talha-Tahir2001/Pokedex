@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, finalize, forkJoin, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { PokemonDetails } from '../models/pokemon-details';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 interface Pokemon {
   name: string;

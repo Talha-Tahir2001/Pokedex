@@ -14,7 +14,7 @@ interface Pokemon {
 export class PokemonService {
   private http = inject(HttpClient);
   private pokemonBaseUrl = environment.api.POKE_API_URL;
-  private apiBaseUrl = environment.api.BACKEND_API_URI;
+  // private apiBaseUrl = environment.api.BACKEND_API_URI;
 
   // Signals for state management
   pokemonList = signal<Pokemon[]>([]);

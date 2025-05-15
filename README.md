@@ -1,6 +1,11 @@
 
 # Angular Pokedex 
 
+Welcome to **Pokédex** — your sleek, modern Pokédex built with Angular!
+
+> “Catch ’em all, one component at a time.”  
+
+![App Screenshot](/public/pokedex-ui.png)
 <!--- [![Build Status](https://img.shields.io/github/actions/workflow/status/Talha-Tahir2001/Pokedex/ci.yml)](https://github.com/your-username/angular-pokedex/actions) --->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)]([Pokedex](https://pokedex-six-steel.vercel.app/))
@@ -21,7 +26,7 @@
 - [Troubleshooting ](#troubleshooting)
 - [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgement](#acknowledgement)
+- [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
 
 ## Overview
